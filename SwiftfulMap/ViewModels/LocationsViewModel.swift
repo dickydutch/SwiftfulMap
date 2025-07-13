@@ -27,6 +27,7 @@ class LocationsViewModel: ObservableObject {
 //    let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     
     @Published var mapBounds: MapCameraBounds = MapCameraBounds()
+    @Published var mapPosition: MapCameraPosition = .camera(.init(centerCoordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0), distance: 1))
     
     @Published var showLocationsList: Bool = false
     
@@ -39,8 +40,10 @@ class LocationsViewModel: ObservableObject {
 
     private func updateMapRegion(location: Location) {
         withAnimation(.easeInOut) {
-//            mapRegion = MKCoordinateRegion(center: location.coordinates, span: mapSpan)
-            mapBounds = MapCameraBounds(centerCoordinateBounds: MKMapRect(origin: MKMapPoint(location.coordinates), size: MKMapSize(width: 1, height: 1)), minimumDistance: 500, maximumDistance: 20000)
+            //            mapRegion = MKCoordinateRegion(center: location.coordinates, span: mapSpan)
+            let rect = MKMapRect(origin: MKMapPoint(location.coordinates), size: MKMapSize(width: 1, height: 1))
+            mapBounds = MapCameraBounds(centerCoordinateBounds: rect, minimumDistance: 1000, maximumDistance: 80000)
+            mapPosition = .camera(.init(centerCoordinate: location.coordinates, distance: 10000))
         }
 
     }
