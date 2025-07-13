@@ -14,7 +14,8 @@ struct LocationsView: View {
     
     var body: some View {
         ZStack {
-            Map(coordinateRegion: $vm.mapRegion)
+            Map(bounds: vm.mapBounds)
+//            Map(coordinateRegion: $vm.mapRegion)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {

@@ -23,8 +23,10 @@ class LocationsViewModel: ObservableObject {
     }
     
     
-    @Published var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
-    let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+//    @Published var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
+//    let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+    
+    @Published var mapBounds: MapCameraBounds = MapCameraBounds()
     
     @Published var showLocationsList: Bool = false
     
@@ -37,9 +39,8 @@ class LocationsViewModel: ObservableObject {
 
     private func updateMapRegion(location: Location) {
         withAnimation(.easeInOut) {
-            mapRegion = MKCoordinateRegion(
-                center: location.coordinates,
-                span: mapSpan)
+//            mapRegion = MKCoordinateRegion(center: location.coordinates, span: mapSpan)
+            mapBounds = MapCameraBounds(centerCoordinateBounds: MKMapRect(origin: MKMapPoint(location.coordinates), size: MKMapSize(width: 1, height: 1)), minimumDistance: 500, maximumDistance: 20000)
         }
 
     }
